@@ -1,24 +1,16 @@
 using UnityEngine;
 
-public class BJ_Ball : MonoBehaviour
+public class BJ_Ball : StoppablePhysicsObject
 {
-    private Rigidbody2D rb;
     [SerializeField] private float ballSpeed = 2.0f;
 
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
     private void FixedUpdate() {
         rb.linearVelocityX = ballSpeed * GameManager.globalGameSpeed;
-
-        if(transform.position.y < -10){
-            gameObject.SetActive(false);
-        }
     }
 
-    private void Reset()
+    public void Reset()
     {
         transform.position = transform.parent.position;
+        gameObject.SetActive(false);
     }
 }

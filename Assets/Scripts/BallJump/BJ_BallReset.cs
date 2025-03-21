@@ -2,15 +2,10 @@ using UnityEngine;
 
 public class BJ_BallReset : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(collision.tag == "BJ_Ball"){
+            collision.GetComponent<BJ_Ball>().Reset();
+        }
     }
 }

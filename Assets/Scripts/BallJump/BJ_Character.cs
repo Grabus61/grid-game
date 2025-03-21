@@ -2,10 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BJ_Character : MonoBehaviour
+public class BJ_Character : StoppablePhysicsObject
 {
-    private Rigidbody2D rb;
-
     [SerializeField] private InputActionReference jumpButton;
     [SerializeField] private InputActionReference move;
 
@@ -16,11 +14,6 @@ public class BJ_Character : MonoBehaviour
     Vector2 moveVector;
 
     bool jumpRequested = false;
-
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
 
     void OnEnable()
     {
@@ -34,7 +27,7 @@ public class BJ_Character : MonoBehaviour
 
     private void JumpButtonPressed(InputAction.CallbackContext context)
     {
-        if(context.performed){
+        if(context.performed && !stopped){
             jumpRequested = true;
         }
     }
@@ -44,7 +37,10 @@ public class BJ_Character : MonoBehaviour
         moveVector = move.action.ReadValue<Vector2>();
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
+        if(stopped) return;
+
         //Move
         rb.linearVelocityX = moveVector.x * moveSpeed;
 

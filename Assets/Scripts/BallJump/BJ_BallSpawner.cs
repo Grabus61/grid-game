@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BJ_BallSpawner : MonoBehaviour
+public class BJ_BallSpawner : StoppableObject
 {
     [SerializeField] private GameObject ball;
 
@@ -16,13 +16,16 @@ public class BJ_BallSpawner : MonoBehaviour
 
         GameObject tempBall;
         for(int i = 0; i < poolAmount; i++){
-            tempBall = Instantiate(ball, transform.position, Quaternion.identity);
+            tempBall = Instantiate(ball, transform);
             tempBall.SetActive(false);
             ballPool.Add(tempBall);
+            game.AddStoppableObject(tempBall.GetComponent<IStoppable>());
         }
     }
     void Update()
     {
+        if(stopped) return;
+        
         if(timer <= 0f){
             GetPooledBall().SetActive(true);
             timer = Random.Range(2, 4);

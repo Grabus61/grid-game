@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
 
     private float defaultGlobalGameSpeed = 2f;
 
-    private int gameChangeCounter = 0;
-
     [SerializeField] private Game[] gameList;
 
     private float timer = 2f;
