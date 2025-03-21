@@ -502,9 +502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24802e6f046ceb24c973a447e608c57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 971239827}
-  ballSpawner: {fileID: 1245104532}
 --- !u!4 &727003484
 Transform:
   m_ObjectHideFlags: 0
@@ -792,6 +789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a886573634aa3cb4d908116b1a001ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
   jumpButton: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   move: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   jumpSpeed: 8
@@ -877,6 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0d344c09561e24eaeb750f982cbbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 727003483}
   ball: {fileID: 8247593952571394227, guid: 83643016c292f6749a8ff5f3c8ba50e3, type: 3}
   poolAmount: 10
 --- !u!1 &1264774740
@@ -992,6 +991,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1319090742}
   - component: {fileID: 1319090743}
+  - component: {fileID: 1319090744}
   m_Layer: 0
   m_Name: BallResetZone
   m_TagString: Untagged
@@ -1060,6 +1060,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.3670855, y: 3.3331585}
   m_EdgeRadius: 0
+--- !u!114 &1319090744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319090741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2734b4f8d6151b0408d2595dd5ee1dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1546029912
 GameObject:
   m_ObjectHideFlags: 0
