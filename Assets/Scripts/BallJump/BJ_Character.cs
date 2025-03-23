@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +13,7 @@ public class BJ_Character : StoppablePhysicsObject
     Vector2 moveVector;
 
     bool jumpRequested = false;
+    bool canJump = true;
 
     void OnEnable()
     {
@@ -42,21 +42,28 @@ public class BJ_Character : StoppablePhysicsObject
         if(stopped) return;
 
         //Move
-        rb.linearVelocityX = moveVector.x * moveSpeed;
+        rb.linearVelocityX = moveVector.x * moveSpeed * GameManager.globalGameSpeed;
 
         //Jump
-        if(jumpRequested){
+        if(jumpRequested && canJump){
             rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
             jumpRequested = false;
+            canJump = false;
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         //On Contact with Ball, Lose
-        if(collision.tag == "BJ_Ball"){
-            //Lose
-            Destroy(gameObject);
+        if(collision.GetComponent<Ball>()){
+            GameManager.instance.LoseSingleGame(transform.parent.GetComponent<Game>());
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.name == "BJ_Ground"){
+            canJump = true;
         }
     }
 }

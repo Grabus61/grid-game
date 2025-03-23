@@ -1,14 +1,9 @@
 using UnityEngine;
 
+//Base stoppable object class
 public class StoppableObject : MonoBehaviour, IStoppable
 {
-    [SerializeField] protected Game game;
     protected bool stopped;
-
-    private void Start()
-    {
-        game.AddStoppableObject(this);    
-    }
 
     public virtual void Stop()
     {

@@ -1,16 +1,38 @@
-using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    protected List<IStoppable> stoppableObjects;
+    [SerializeField] protected StoppableObject[] stoppableObjects;
 
-    void Awake()
-    {
-        stoppableObjects = new List<IStoppable>();
+    [SerializeField] protected CinemachineCamera cam;
+
+    [SerializeField] protected SpriteRenderer background;
+
+    [HideInInspector] public bool lost = false;
+
+    public virtual void ContinueGame(){
+        foreach(StoppableObject obj in stoppableObjects){
+            if(obj.gameObject.activeInHierarchy){
+                obj.Continue();
+            }
+        }
     }
 
-    public void AddStoppableObject(IStoppable obj){
-        stoppableObjects.Add(obj);
+    public virtual void StopGame(){
+        foreach(StoppableObject obj in stoppableObjects){
+            if(obj.gameObject.activeInHierarchy){
+                obj.Stop();
+            }
+        }
+    }
+
+    public CinemachineCamera GetGameCamera(){
+        return cam;
+    }
+
+    public void Lose(){
+        background.color = Color.gray;
+        lost = true;
     }
 }

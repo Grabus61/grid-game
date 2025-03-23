@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//Stoppable object with physics
 public class StoppablePhysicsObject : StoppableObject
 {
     protected Rigidbody2D rb;
