@@ -9,4 +9,14 @@ public class MainMenuManager : MonoBehaviour
     public void Quit(){
         Application.Quit();
     }
+
+    public void ChangeMusic(){
+        AudioSource audioSource = AlwaysMusic.instance.GetComponent<AudioSource>();
+        if(audioSource.isPlaying){
+            audioSource.Pause();
+        }
+        else{
+            audioSource.Play();
+        }
+    }
 }
