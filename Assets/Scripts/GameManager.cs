@@ -25,6 +25,12 @@ public class GameManager : MonoBehaviour
     private float defaultTimer = 3f;
     private bool pauseTimer = true;
 
+    //Stats
+    private bool gameEnded = false;
+    private float gameTime = 0;
+    private float score = 0;
+    private float scoreMultiplier = 10;
+
     //game speed panel
     [SerializeField] private RectTransform gameSpeedPanel;
     [SerializeField] private Animator gameSpeedAnimatior;
@@ -32,6 +38,8 @@ public class GameManager : MonoBehaviour
 
     //End Panel
     [SerializeField] private GameObject endPanel;
+    [SerializeField] private TMP_Text gameTimeText;
+    [SerializeField] private TMP_Text scoreText;
 
     void Awake()
     {
@@ -45,7 +53,8 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator Start()
-    {
+    { 
+        StartCoroutine(CalculateTimeAndScore());
         //Select random game at start
         activeGame = gameList[Random.Range(0, gameList.Length)];
 
@@ -91,12 +100,15 @@ public class GameManager : MonoBehaviour
         else{
             yield return new WaitForSeconds(0.5f); //Wait for camera change
         }
+
         List<Game> selectableGames = new List<Game>(activeGameList);
         selectableGames.Remove(activeGame);
 
         Game selectedGame = selectableGames[Random.Range(0, selectableGames.Count)];
        
         StartCoroutine(PlayGame(selectedGame));
+
+        scoreMultiplier += 10; //Score increases more when game changed
     }
 
     public IEnumerator PlayGame(Game game){
@@ -137,7 +149,17 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        endPanel.SetActive(true);
+        endPanel.GetComponent<Animator>().SetTrigger("Activate");
+        gameTimeText.text = Mathf.Floor(gameTime / 60) + ":" + gameTime % 60;
+        scoreText.text = "Score: " + score.ToString();
+    }
+
+    private IEnumerator CalculateTimeAndScore(){
+        while(!gameEnded){
+            yield return new WaitForSeconds(1);
+            gameTime += 1;
+            score += scoreMultiplier * globalGameSpeed;
+        }
     }
 
     public void Replay(){
